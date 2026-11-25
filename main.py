@@ -2,7 +2,7 @@ import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 from variables import Systemvariables
-from classes.commands import start, HelpCommand, Echo
+from classes.commands import start, HelpCommand, Echo, Weather
 
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 logging.getLogger("root").setLevel(logging.INFO)
@@ -16,6 +16,7 @@ if __name__ == "__main__":
 
     application.add_handler(CommandHandler("start", start.startBot))
     application.add_handler(CommandHandler("help", HelpCommand.printHelp))
+    application.add_handler(CommandHandler("weather", Weather.getWeather))
 
     application.add_handler(MessageHandler(filters.TEXT, Echo.echo))
 
