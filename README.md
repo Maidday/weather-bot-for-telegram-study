@@ -1,0 +1,1 @@
+Before compiling, read "_variables.py".
