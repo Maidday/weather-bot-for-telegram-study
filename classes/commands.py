@@ -18,7 +18,8 @@ class HelpCommand:
         logger.info("Recieve help command.")
         await update.message.reply_text("Weatherman Bot v0.0.1\n"
                                         "/start - start bot.\n"
-                                        "/help - write this message.")
+                                        "/help - write this message.\n"
+                                        "/weather [location] - get detailed weather report in specifiect city or")
 
 class Echo:
     async def echo(update : Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -35,7 +36,7 @@ class Weather:
 
     async def getWeather(update : Update, context : ContextTypes.DEFAULT_TYPE) -> None:
         logger.info("Recieve weather command.")
-        city = context.args[0]
+        city = " ".join(context.args)
         resp = WeatherApi.apiCall(city)
         if resp:
             current = resp.Current()
@@ -55,6 +56,6 @@ class Weather:
                                             f"({Weather._cardinal_direction(wind_direction)})\n"
                                             f"Visibility: {visibility / 1000:.1f} km")
         else:
-            logger.info("Received unknown location: %s", city)
+            logger.info(f"Received unknown location: {city}")
             await update.message.reply_text("Unknown city or location.")
         
